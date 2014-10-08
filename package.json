@@ -1,0 +1,12 @@
+{
+  "name": "static2000",
+  "version": "0.0.0",
+  "description": "A simple static site generator",
+  "dependencies": {
+    "front-matter": "^0.2.0",
+    "jade": "^1.7.0",
+    "map-stream": "^0.1.0",
+    "vinyl": "^0.4.3",
+    "vinyl-fs": "^0.3.8"
+  }
+}
