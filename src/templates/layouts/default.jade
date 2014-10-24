@@ -12,8 +12,7 @@ html
             a(href="#main-menu") Toggle menu
             nav#main-menu
                 a(href="/")= model.root().title
-                each page in model.root().children()
-                    a(href=page.path)= page.title
+                +main-menu(model.root())
 
         main(role="main")
             block body

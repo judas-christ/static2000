@@ -1,0 +1,7 @@
+//- Put your global mixins here; globals.jade is imported automatically and available in all templates.
+mixin main-menu(root)
+    each page in root.children()
+        a(href=page.path)= page.title
+
+mixin example-mixin
+    small This is a mixin available in all templates and pages

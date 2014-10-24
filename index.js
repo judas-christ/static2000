@@ -12,6 +12,7 @@ var es = require('event-stream');
 var jade = require('jade');
 var fm = require('front-matter');
 var path = require('path');
+var _ = require('lodash');
 
 var templatesMap = {};
 var contentTree;
@@ -28,7 +29,9 @@ var buildTemplates = function() {
     return fs.src('*.jade', {cwd:defaults.templates})
         .pipe(es.map(function(file, cb) {
             var name = path.basename(file.path, path.extname(file.path));
-            var template = jade.compile(String(file.contents), {
+            var fileContents = String(file.contents);
+            fileContents = 'include ./includes/globals.jade\n' + fileContents;
+            var template = jade.compile(fileContents, {
                 filename: file.path,
                 pretty: true
             });
@@ -41,9 +44,9 @@ function stringifyContent(key, value) {
     return key.indexOf('_') === 0 ? undefined : value;
 }
 
-function Content(options) {
-    if(!this instanceof Content) {
-        return new Content(options);
+function ContentModel(options) {
+    if(!this instanceof ContentModel) {
+        return new ContentModel(options);
     }
 
     for(var key in options) {
@@ -58,7 +61,7 @@ function Content(options) {
     this._children = options._children || [];
 }
 
-Content.prototype = {
+ContentModel.prototype = {
     children: function(filter) {
         if(typeof filter === 'function')
             return this._children.filter(filter);
@@ -138,7 +141,7 @@ var buildContentTree = function() {
             contentOptions._root = contentTree;
             contentOptions._parent = parent;
 
-            var contentObject = new Content(contentOptions);
+            var contentObject = new ContentModel(contentOptions);
 
             if(parent) {
                 parent._children.push(contentObject);
@@ -163,12 +166,32 @@ var buildPages = function() {
                 cb(new Error('No template found named "' + String(content.template) + '" for content "' + content.path + '"'));
                 return;
             }
-            //create a locals object that contains the content so that we can call the functions on the content object, and also add global functions later if we want
-            var locals = {
-                model: content
+            var globalFunctions = {
+                getByPath: function(path) {
+                    return contentMap[path];
+                },
+                query: function(q) {
+                    return contentList.filter(function(v) {
+                        for(var key in q) {
+                            if(v[key] != q[key]) {
+                                return false;
+                            }
+                        }
+                        return true;
+                    });
+                }
             };
-            var htmlBody = jade.render(content._body, locals);
-            locals.body = htmlBody;
+            //create a locals object that contains the content so that we can call the functions on the content object, and also add global functions later if we want
+            var locals = _.assign({}, globalFunctions, {
+                filename: path.join(defaults.templates, 't'), //fake filename so includes are available
+                model: content
+            });
+            var contentBody = 'include ./includes/globals.jade\n' + content._body;
+            var htmlBody = jade.render(contentBody, locals);
+            locals = _.assign({}, globalFunctions, {
+                model: content,
+                body: htmlBody
+            });
             var html = template(locals);
             var filePath = content.path.substring(1);
             var fileOptions = {
