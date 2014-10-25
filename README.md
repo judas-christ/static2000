@@ -6,7 +6,7 @@ The simple static site generator built on node.js
 
 Via npm:
 
-```
+```bash
 $ npm install static2000
 ```
 
@@ -41,7 +41,7 @@ src
 
 Static2000 exports one function that takes three optional arguments. Options (see above), a success callback and and error callback.
 
-```
+```javascript
 var static2000 = require('static2000');
 
 static2000(options, onSuccess, onError);
@@ -51,7 +51,7 @@ static2000(options, onSuccess, onError);
 
 Using static2000 together with [Gulp](http://gulpjs.com/) is simple, no plugin required:
 
-```
+```javascript
 var static2000 = require('static2000');
 
 gulp.task('static2000', function(cb) {
