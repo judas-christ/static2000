@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+'use strict';
+
+var static2000 = require('../index');
+
+//todo: use minimist to parse cmd line options and pass them to static2000 as options
+static2000();
