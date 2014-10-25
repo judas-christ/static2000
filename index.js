@@ -24,7 +24,7 @@ var defaultErrorHandler = function(error) {
     console.error(colors.red('An error occurred in static2000:'), error.message);
 };
 
-var buildTemplates = function(options, errorCallback) {
+var buildTemplates = function(options, onError) {
     // console.log('buildTemplates', options);
     return fs.src('*.jade', {cwd: options.templates})
         .pipe(es.map(function(file, cb) {
@@ -38,7 +38,7 @@ var buildTemplates = function(options, errorCallback) {
             templatesMap[name] = template;
             cb(null, file);
         }))
-        .on('error', errorCallback);
+        .on('error', onError);
 };
 
 // function stringifyContent(key, value) {
@@ -109,7 +109,7 @@ function findParent(root, path) {
     }
 }
 
-var buildContentTree = function(options, errorCallback) {
+var buildContentTree = function(options, onError) {
     // console.log('buildContentTree', options);
     return fs.src('**/*.jade', {cwd: options.content})
         .pipe(es.map(function(file, cb) {
@@ -155,10 +155,10 @@ var buildContentTree = function(options, errorCallback) {
 
             cb(null, file);
         }))
-        .on('error', errorCallback);
+        .on('error', onError);
 };
 
-var buildPages = function(options, errorCallback) {
+var buildPages = function(options, onError) {
     // console.log('buildPages', options);
     return es.readArray(contentList)
         .pipe(es.map(function(content, cb) {
@@ -202,22 +202,23 @@ var buildPages = function(options, errorCallback) {
             var file = new File(fileOptions);
             cb(null, file);
         }))
-        .on('error', errorCallback)
+        .on('error', onError)
         .pipe(fs.dest(options.dest))
 }
 
-var buildSite = function(options, doneCallback, errorCallback) {
-    if(typeof options === 'function' && typeof cb === 'undefined') {
-        cb = options;
-        options = undefined;
-    }
+var buildSite = function(options, onSuccess, onError) {
+    // if(typeof options === 'function' && typeof onSuccess === 'function') {
+    //     onError = onSuccess;
+    //     onSuccess = options;
+    //     options = undefined;
+    // }
     var opts = _.assign({}, defaults, options);
-    errorCallback = errorCallback || defaultErrorHandler;
-    doneCallback = doneCallback || function() {};
-    es.merge(buildTemplates(opts, errorCallback), buildContentTree(opts, errorCallback))
+    onError = onError || defaultErrorHandler;
+    onSuccess = onSuccess || function() {};
+    es.merge(buildTemplates(opts, onError), buildContentTree(opts, onError))
         .on('end', function() {
-            buildPages(opts, errorCallback)
-                .on('end', doneCallback);
+            buildPages(opts, onError)
+                .on('end', onSuccess);
         });
 };
 
