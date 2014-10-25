@@ -1,7 +1,18 @@
 #!/usr/bin/env node
 'use strict';
 
+var minimist = require('minimist');
 var static2000 = require('../index');
 
-//todo: use minimist to parse cmd line options and pass them to static2000 as options
-static2000();
+var argv = process.argv;
+var args = minimist(argv.slice(2));
+
+//remove empty options
+for(var key in args) {
+    if(!args[key])
+        delete args[key];
+}
+//and positional ones
+delete args['_'];
+
+static2000(args);
