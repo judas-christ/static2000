@@ -3,17 +3,32 @@
   "version": "0.0.0",
   "description": "A simple static site generator",
   "homepage": "https://github.com/judas-christ/static2000",
-  "author": {
-    "name": "Daniel Hägglund"
-  },
+  "main": "index.js",
   "dependencies": {
     "event-stream": "^3.1.7",
     "front-matter": "^0.2.0",
     "jade": "^1.7.0",
     "lodash": "^2.4.1",
-    "map-stream": "^0.1.0",
-    "merge-stream": "^0.1.6",
     "vinyl": "^0.4.3",
     "vinyl-fs": "^0.3.10"
-  }
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/judas-christ/static2000.git"
+  },
+  "keywords": [
+    "static",
+    "site",
+    "generator"
+  ],
+  "author": "Daniel Hägglund",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/judas-christ/static2000/issues"
+  },
+  "homepage": "https://github.com/judas-christ/static2000"
 }
