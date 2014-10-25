@@ -6,7 +6,7 @@ The simple static site generator built on node.js
 
 Via npm:
 
-´´´
+```
 $ npm install static2000
 ```
 
@@ -37,7 +37,6 @@ src
 * `content` Source folder for content.
 * `globalFunctions` An object with functions that should be available on all pages and in all templates.
 
-
 ### API
 
 Static2000 exports one function that takes three optional arguments. Options (see above), a success callback and and error callback.
@@ -47,7 +46,6 @@ var static2000 = require('static2000');
 
 static2000(options, onSuccess, onError);
 ```
-
 
 ### Gulp
 
