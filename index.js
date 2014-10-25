@@ -13,13 +13,18 @@ var jade = require('jade');
 var fm = require('front-matter');
 var path = require('path');
 var _ = require('lodash');
+var colors = require('colors/safe');
 
 var templatesMap = {};
 var contentTree;
 var contentMap = {};
 var contentList = [];
 
-var buildTemplates = function(options) {
+var defaultErrorHandler = function(error) {
+    console.error(colors.red('An error occurred in static2000:'), error.message);
+};
+
+var buildTemplates = function(options, errorCallback) {
     // console.log('buildTemplates', options);
     return fs.src('*.jade', {cwd: options.templates})
         .pipe(es.map(function(file, cb) {
@@ -32,7 +37,8 @@ var buildTemplates = function(options) {
             });
             templatesMap[name] = template;
             cb(null, file);
-        }));
+        }))
+        .on('error', errorCallback);
 };
 
 // function stringifyContent(key, value) {
@@ -103,11 +109,10 @@ function findParent(root, path) {
     }
 }
 
-var buildContentTree = function(options) {
+var buildContentTree = function(options, errorCallback) {
     // console.log('buildContentTree', options);
     return fs.src('**/*.jade', {cwd: options.content})
         .pipe(es.map(function(file, cb) {
-
             var frontMatter = fm(String(file.contents));
             var relativePath = path.relative(file.cwd, file.path);
             var contentPath = path.dirname(relativePath);
@@ -149,10 +154,11 @@ var buildContentTree = function(options) {
             }
 
             cb(null, file);
-        }));
+        }))
+        .on('error', errorCallback);
 };
 
-var buildPages = function(options) {
+var buildPages = function(options, errorCallback) {
     // console.log('buildPages', options);
     return es.readArray(contentList)
         .pipe(es.map(function(content, cb) {
@@ -196,16 +202,22 @@ var buildPages = function(options) {
             var file = new File(fileOptions);
             cb(null, file);
         }))
+        .on('error', errorCallback)
         .pipe(fs.dest(options.dest))
 }
 
-var buildSite = function(options, cb) {
+var buildSite = function(options, doneCallback, errorCallback) {
+    if(typeof options === 'function' && typeof cb === 'undefined') {
+        cb = options;
+        options = undefined;
+    }
     var opts = _.assign({}, defaults, options);
-    console.log(opts);
-    es.merge(buildTemplates(opts), buildContentTree(opts))
+    errorCallback = errorCallback || defaultErrorHandler;
+    doneCallback = doneCallback || function() {};
+    es.merge(buildTemplates(opts, errorCallback), buildContentTree(opts, errorCallback))
         .on('end', function() {
-            buildPages(opts)
-                .on('end', cb || function() {});
+            buildPages(opts, errorCallback)
+                .on('end', doneCallback);
         });
 };
 
