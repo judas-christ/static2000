@@ -15,15 +15,16 @@ var path = require('path');
 var _ = require('lodash');
 var colors = require('colors/safe');
 
-var templatesMap = {};
+//global variables
+var templatesMap;
 var contentTree;
-var contentMap = {};
-var contentList = [];
+var contentMap;
+var contentList;
 
+//default stream event handlers
 var defaultOnError = function(error) {
     console.error(colors.red('An error occurred in static2000:'), String(error));
 };
-
 var defaultOnSuccess = function() {};
 
 var buildTemplates = function(options, onError) {
@@ -43,9 +44,9 @@ var buildTemplates = function(options, onError) {
         .on('error', onError);
 };
 
-// function stringifyContent(key, value) {
-//     return key.indexOf('_') === 0 ? undefined : value;
-// }
+function stringifyContent(key, value) {
+    return key.indexOf('_') === 0 ? undefined : value;
+}
 
 function ContentModel(options) {
     if(!this instanceof ContentModel) {
@@ -191,9 +192,9 @@ var buildPages = function(options, onError) {
             });
             var contentBody = 'include ./includes/globals.jade\n' + content._body;
             var htmlBody = jade.render(contentBody, locals);
+            content.body = htmlBody;
             locals = _.assign({}, globalFunctions, options.globalFunctions, {
-                model: content,
-                body: htmlBody
+                model: content
             });
             var html = template(locals);
             var filePath = content.path.substring(1);
@@ -215,15 +216,23 @@ var buildSite = function(options, onSuccess, onError) {
     //     options = undefined;
     // }
     var opts = _.assign({}, defaults, options);
-    onError = function(error) {
+
+    var onErrorHandler = function(error) {
         (onError || defaultOnError)(error);
         this.emit('end');
     };
-    onSuccess = onSuccess || defaultOnSuccess;
-    es.merge(buildTemplates(opts, onError), buildContentTree(opts, onError))
+    var onSuccessHandler = onSuccess || defaultOnSuccess;
+
+    //reset global variables
+    templatesMap = {};
+    contentTree = undefined;
+    contentMap = {};
+    contentList = [];
+
+    es.merge(buildTemplates(opts, onErrorHandler), buildContentTree(opts, onErrorHandler))
         .on('end', function() {
-            buildPages(opts, onError)
-                .on('end', onSuccess);
+            buildPages(opts, onErrorHandler)
+                .on('end', onSuccessHandler);
         });
 };
 
