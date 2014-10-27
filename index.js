@@ -20,12 +20,11 @@ var contentTree;
 var contentMap = {};
 var contentList = [];
 
-var defaultErrorHandler = function(error) {
+var defaultOnError = function(error) {
     console.error(colors.red('An error occurred in static2000:'), String(error));
-    this.emit('end');
 };
 
-var defaultSuccessHandler = function() {};
+var defaultOnSuccess = function() {};
 
 var buildTemplates = function(options, onError) {
     // console.log('buildTemplates', options);
@@ -216,8 +215,11 @@ var buildSite = function(options, onSuccess, onError) {
     //     options = undefined;
     // }
     var opts = _.assign({}, defaults, options);
-    onError = onError || defaultErrorHandler;
-    onSuccess = onSuccess || defaultSuccessHandler;
+    onError = function(error) {
+        (onError || defaultOnError)(error);
+        this.emit('end');
+    };
+    onSuccess = onSuccess || defaultOnSuccess;
     es.merge(buildTemplates(opts, onError), buildContentTree(opts, onError))
         .on('end', function() {
             buildPages(opts, onError)
