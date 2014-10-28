@@ -16,7 +16,7 @@ Type: `String`
 
 The name of the template used when rendering this page.
 
-### model.children(filter)
+### model.children([filter])
 
 Get all children of the current model, optionally filtered.
 
@@ -24,11 +24,11 @@ Get all children of the current model, optionally filtered.
 
 Get the parent of the current model. If the current model is the root, parent() will be `undefined`.
 
-### model.descendants(filter)
+### model.descendants([filter])
 
 Get the descendants of the current model, optionally filtered.
 
-### model.ascendants(filter)
+### model.ascendants([filter])
 
 Get the ascendants of the current model, optionally filtered. The parent comes first in the returned Array, then its parent and so on.
 
