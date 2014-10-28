@@ -22,10 +22,16 @@ var contentMap;
 var contentList;
 
 //default stream event handlers
-var defaultOnError = function(error) {
-    console.error(colors.red('An error occurred in static2000:'), String(error));
+var defaultOnError = require('./lib/defaultOnError');
+var defaultOnSuccess = require('./lib/noop');
+
+var filterContentList = function(list, filter) {
+    if(typeof filter === 'function')
+        return list.filter(filter);
+    else if(typeof filter === 'object')
+        return _.where(list, filter);
+    return list.slice(0);
 };
-var defaultOnSuccess = function() {};
 
 var buildTemplates = function(options, onError) {
     // console.log('buildTemplates', options);
@@ -44,9 +50,17 @@ var buildTemplates = function(options, onError) {
         .on('error', onError);
 };
 
-function stringifyContent(key, value) {
-    return key.indexOf('_') === 0 ? undefined : value;
-}
+// function stringifyContent(key, value) {
+//     return key.indexOf('_') === 0
+//         ? undefined
+//         : typeof value === 'function'
+//             ? String(value)
+//             : value;
+// }
+
+// function jsonify(obj) {
+//     return JSON.stringify(obj, stringifyContent, 2);
+// }
 
 function ContentModel(options) {
     if(!this instanceof ContentModel) {
@@ -67,16 +81,12 @@ function ContentModel(options) {
 
 ContentModel.prototype = {
     children: function(filter) {
-        if(typeof filter === 'function')
-            return this._children.filter(filter);
-        return this._children.slice();
+        return filterContentList(this._children, filter);
     },
     descendants: function(filter) {
-        var descs = contentList.filter(function(v) { return v.path.indexOf(this.path) === 0 && v.path !== this.path; }, this); //this._children.map(function(v, i) { var kids = v._children.length ? v.descendants() : []; kids.push(v); console.log(kids); return kids; });
+        var descs = contentList.filter(function(v) { return v.path.indexOf(this.path + '/') === 0 && v.path !== this.path; }, this); //this._children.map(function(v, i) { var kids = v._children.length ? v.descendants() : []; kids.push(v); console.log(kids); return kids; });
 
-        if(typeof filter === 'function')
-            return descs.filter(filter);
-        return descs;
+        return filterContentList(descs, filter);
     },
     parent: function() {
         return this._parent;
@@ -88,7 +98,8 @@ ContentModel.prototype = {
             ascs.push(curr._parent);
             curr = curr._parent;
         }
-        return ascs;
+
+        return filterContentList(ascs, filter);
     },
     root: function() {
         return this._root;
@@ -163,6 +174,14 @@ var buildContentTree = function(options, onError) {
 
 var buildPages = function(options, onError) {
     // console.log('buildPages', options);
+    var globalFunctions = {
+        getByPath: function(path) {
+            return contentMap[path];
+        },
+        query: function(q) {
+            return filterContentList(contentList, q);
+        }
+    };
     return es.readArray(contentList)
         .pipe(es.map(function(content, cb) {
             var template = templatesMap[content.template];
@@ -170,21 +189,6 @@ var buildPages = function(options, onError) {
                 cb(new Error('No template found named "' + String(content.template) + '" for content "' + content.path + '"'));
                 return;
             }
-            var globalFunctions = {
-                getByPath: function(path) {
-                    return contentMap[path];
-                },
-                query: function(q) {
-                    return contentList.filter(function(v) {
-                        for(var key in q) {
-                            if(v[key] != q[key]) {
-                                return false;
-                            }
-                        }
-                        return true;
-                    });
-                }
-            };
             //create a locals object that contains the content so that we can call the functions on the content object, and also add global functions later if we want
             var locals = _.assign({}, globalFunctions, options.globalFunctions, {
                 filename: path.join(options.templates, 't'), //fake filename so includes are available

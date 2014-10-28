@@ -12,30 +12,22 @@ $ npm install static2000
 
 ## Usage
 
-Static2000 takes templates and content and mashes them together to create a folder structure 
-and html files. It can be used from the command line or inside a node module and plays nice 
-with Gulp. Gulp is the recommended method of running Static2000, since it does not have any 
+Static2000 takes templates and content and mashes them together to create a folder structure
+and html files. It can be used from the command line or inside a node module and plays nice
+with Gulp. Gulp is the recommended method of running Static2000, since it does not have any
 CSS preprocessing or similar built in.
 
-At the moment, templates must use [jade](http://jade-lang.com/) with YAML front matter 
-for defining properties on content pages. There are plans to support Jinja2 templates as well.
+At the moment, templates must use [jade](http://jade-lang.com/) with YAML front matter
+for defining properties on content pages. There are plans to support other template engines in the future.
 
-The default folder structure for source and output files is:
-
-```
-www
-src
-|- content
-|- templates
-|  |- includes
-```
+See the [documentation](docs/README.md) for more information.
 
 ### Options
 
 * `dest` Destination folder for generated html.
 * `templates` Source folder for templates.
 * `content` Source folder for content.
-* `globalFunctions` An object with functions that should be available on all pages and in all templates.
+* `globalFunctions` An object with functions that should be available on all pages and in all templates. Note that it is often better to use a jade mixin defined in `templates/includes/globals.jade` instead.
 
 ### API
 
