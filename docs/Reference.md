@@ -54,6 +54,10 @@ The path of the page to get. Returns `undefined` if no page is found.
 
 Get all page models matching the filter.
 
+### _
+
+[Lodash](https://lodash.com/) is available in templates for convenience.
+
 ## Filtering
 
 Most methods available in Static2000 that return a list of ContentModels accept a filter as an argument. The filter can be a function or an object. If it's a function it should take the ContentModel as first argument and return true if the page should be kept, and false if it should be filtered out. If the filter is an object, each property in the object will be matched against the same property on every page in the list. If all properties match, the page is kept, if not it is filtered.

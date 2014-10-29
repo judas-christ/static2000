@@ -13,7 +13,6 @@ var jade = require('jade');
 var fm = require('front-matter');
 var path = require('path');
 var _ = require('lodash');
-var colors = require('colors/safe');
 
 //global variables
 var templatesMap;
@@ -180,7 +179,8 @@ var buildPages = function(options, onError) {
         },
         query: function(q) {
             return filterContentList(contentList, q);
-        }
+        },
+        '_': _ //expose lodash for use in templates
     };
     return es.readArray(contentList)
         .pipe(es.map(function(content, cb) {
