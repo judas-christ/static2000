@@ -51,6 +51,19 @@ gulp.task('static2000', function(cb) {
 });
 ```
 
+# Change Log
+
+## 0.1.2
+
+* Bug fixes.
+* Improved documentation.
+
+## 0.1.1
+
+* Fixed stream error handling.
+* Fixed compiled body rendering.
+* Fixed readme file layout issues.
+
 # License
 
 MIT

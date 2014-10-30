@@ -1,11 +1,5 @@
 'use strict';
 
-var defaults = {
-    templates: 'src/templates/',
-    content: 'src/content',
-    dest: './www'
-};
-
 var fs = require('vinyl-fs');
 var File = require('vinyl');
 var es = require('event-stream');
@@ -13,6 +7,12 @@ var jade = require('jade');
 var fm = require('front-matter');
 var path = require('path');
 var _ = require('lodash');
+
+var defaults = {
+    templates: path.join('src','templates'),
+    content: path.join('src','content'),
+    dest: 'www'
+};
 
 //global variables
 var templatesMap;
@@ -110,7 +110,7 @@ ContentModel.prototype = {
         return contentTree;
     },
     relativePath: function(currentPath) {
-        var relPath = path.relative(currentPath || model.path, this.path).replace('\\', '/');
+        var relPath = path.relative(currentPath || model.path, this.path).replace(/\\/g, '/');
         return relPath ? relPath + '/' : '.'; //if path is empty, set it to . to prevent minifiers from removing href attribute on a tags
     }
 };
@@ -137,13 +137,23 @@ function findParent(contentMap, childPath) {
 }
 
 var parsePath = function(relativePath, ext) {
-    var orderAndName = /^(?:(\d+)-)?(.+)$/.exec(path.basename(relativePath, ext));
+    var orderAndNameRegex = /^(?:(\d+)-)?(.+)$/;
+
+    var dirnames = path.dirname(relativePath).split(path.sep);
+    var basenames = path.basename(relativePath, ext).split('.');
+    var basename = basenames.pop();
+    dirnames = dirnames.filter(function(v) { return v !== '.'; }).concat(basenames.map(function(v) { return orderAndNameRegex.exec(v)[2]; }));
+
+    var orderAndName = orderAndNameRegex.exec(basename);
     var order = Number(orderAndName[1]);
     var filename = orderAndName[2];
+
     var dirname = filename === 'index'
         ? ''
         : filename;
-    var url = ('/' + path.join(path.dirname(relativePath), dirname).replace(/\\|\./g, '/') + '/').replace(/\/\/+/g, '/');
+
+    var url = ('/' + path.join(dirnames.join(path.sep), dirname).replace(/\./, '').replace(/\\/g, '/') + '/').replace(/\/\/+/g, '/');
+
     return {
         order: order,
         path: url
@@ -151,7 +161,7 @@ var parsePath = function(relativePath, ext) {
 }
 
 var buildContentList = function(options, onError) {
-    return fs.src('**/*.jade', {cwd: options.content})
+    return fs.src(path.join('**','*.jade'), {cwd: options.content})
         .pipe(es.map(function(file, cb) {
 
             var frontMatter = fm(String(file.contents));
