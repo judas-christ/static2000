@@ -8,12 +8,12 @@
 The default folder structure for source and output files is:
 
 ```
-www
-src
-|- templates
-|  |- includes
-|  |- layouts
-|- content
+www/
+src/
+|- templates/
+|  |- includes/
+|  |- layouts/
+|- content/
 ```
 
 * `www` is the default output folder.
