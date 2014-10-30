@@ -20,7 +20,7 @@ The name of the template used when rendering this page.
 
 Type: `Number`
 
-The sort order for this page. Can be explicitly defined by prefixing the filename with a number and a dash. Eg. `2-page-name.jade` will become a page named `page-name` with an `order` of 2. Useful when pages should not be listed alphabetically. This property can be overwritten by defining the order in the YAML front matter of the page.
+The sort order for this page. Can be explicitly defined by prefixing the filename with a number and a dash. Eg. `2-page-name.jade` will become a page named `page-name` with an `order` of 2. Useful when pages should not be listed alphabetically.
 
 ### model.children([filter])
 
