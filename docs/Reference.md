@@ -36,6 +36,16 @@ Get the ascendants of the current model, optionally filtered. The parent comes f
 
 Get the root page's model.
 
+### model.relativePath([basePath])
+
+Get the path to this page relative to `basePath`. Useful when the site should live in a subdirectory.
+
+#### basePath
+
+Type: `String`
+
+The base path to get a relative path from. If it's not explicitly supplied, the current model's `path` property will be used.
+
 ## Global functions
 
 The global functions are utility functions for finding content.

@@ -5,14 +5,13 @@ html
         meta(name="viewport", content="width=device-width")
         title
             block title
-                |= title
+                | #{model.title}
     body
         header
-            a(href="/")= model.root().title
-            a(href="#main-menu") Toggle menu
-            nav#main-menu
-                a(href="/")= model.root().title
-                +main-menu(model.root())
+            a(href=model.root().relativePath()) Site Name
+            nav
+                a(href=model.root().relativePath())= model.root().title
+                +menu(model.root())
 
         main(role="main")
             block body

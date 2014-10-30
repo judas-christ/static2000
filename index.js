@@ -20,6 +20,9 @@ var contentTree;
 var contentMap;
 var contentList;
 
+//the current page's model
+var model;
+
 //default stream event handlers
 var defaultOnError = require('./lib/defaultOnError');
 var defaultOnSuccess = require('./lib/noop');
@@ -36,30 +39,34 @@ var buildTemplates = function(options, onError) {
     // console.log('buildTemplates', options);
     return fs.src('*.jade', {cwd: options.templates})
         .pipe(es.map(function(file, cb) {
+
             var name = path.basename(file.path, path.extname(file.path));
             var fileContents = String(file.contents);
             fileContents = 'include ./includes/globals.jade\n' + fileContents;
+
             var template = jade.compile(fileContents, {
                 filename: file.path,
                 pretty: true
             });
+
             templatesMap[name] = template;
+
             cb(null, file);
         }))
         .on('error', onError);
 };
 
-// function stringifyContent(key, value) {
-//     return key.indexOf('_') === 0
-//         ? undefined
-//         : typeof value === 'function'
-//             ? String(value)
-//             : value;
-// }
+function stringifyContent(key, value) {
+    return key.indexOf('_') === 0
+        ? undefined
+        : typeof value === 'function'
+            ? String(value)
+            : value;
+}
 
-// function jsonify(obj) {
-//     return JSON.stringify(obj, stringifyContent, 2);
-// }
+function jsonify(obj) {
+    return JSON.stringify(obj, stringifyContent, 2);
+}
 
 function ContentModel(options) {
     if(!this instanceof ContentModel) {
@@ -73,7 +80,6 @@ function ContentModel(options) {
     }
 
     this._body = options._body || '';
-    this._root = options._root || this;
     this._parent = options._parent;
     this._children = options._children || [];
 }
@@ -101,48 +107,60 @@ ContentModel.prototype = {
         return filterContentList(ascs, filter);
     },
     root: function() {
-        return this._root;
+        return contentTree;
+    },
+    relativePath: function(currentPath) {
+        var relPath = path.relative(currentPath || model.path, this.path).replace('\\', '/');
+        return relPath ? relPath + '/' : '.'; //if path is empty, set it to . to prevent minifiers from removing href attribute on a tags
     }
 };
 
-function findParent(root, path) {
-    if(root) {
-        if(path.indexOf(root.path) === 0) {
-            for(var i=root._children.length;i--;) {
-                if(path.indexOf(root._children[i].path) === 0) {
-                    if(path.substring(root._children[i].path.length).indexOf('/')<0) {
-                        return root[i];
-                    }
-                    return findParent(root._children[i], path);
-                }
-            }
-            return root;
-        }
-        throw Error('Could not find parent for '+path);
-    }
+// function findParent(root, path) {
+//     if(root) {
+//         if(path.indexOf(root.path) === 0) {
+//             for(var i=root._children.length;i--;) {
+//                 if(path.indexOf(root._children[i].path) === 0) {
+//                     if(path.substring(root._children[i].path.length).indexOf('/')<0) { //todo: does this work now?
+//                         return root[i];
+//                     }
+//                     return findParent(root._children[i], path);
+//                 }
+//             }
+//             return root;
+//         }
+//         throw Error('Could not find parent for '+path);
+//     }
+// }
+function findParent(contentMap, childPath) {
+    var parentPath = (path.dirname(childPath) + '/').replace('//', '/');
+    return contentMap[parentPath];
 }
 
-var buildContentTree = function(options, onError) {
-    // console.log('buildContentTree', options);
+var parsePath = function(relativePath, ext) {
+    var orderAndName = /^(?:(\d+)-)?(.+)$/.exec(path.basename(relativePath, ext));
+    var order = Number(orderAndName[1]);
+    var filename = orderAndName[2];
+    var dirname = filename === 'index'
+        ? ''
+        : filename;
+    var url = ('/' + path.join(path.dirname(relativePath), dirname).replace(/\\|\./g, '/') + '/').replace(/\/\/+/g, '/');
+    return {
+        order: order,
+        path: url
+    };
+}
+
+var buildContentList = function(options, onError) {
     return fs.src('**/*.jade', {cwd: options.content})
         .pipe(es.map(function(file, cb) {
+
             var frontMatter = fm(String(file.contents));
             var relativePath = path.relative(file.cwd, file.path);
-            var contentPath = path.dirname(relativePath);
-
-            var isRoot = false;
-            var parent;
-
-            if(contentPath === '.') {
-                contentPath = '/';
-                isRoot = true;
-            } else {
-                contentPath = '/' + contentPath.replace('\\', '/');
-                parent = findParent(contentTree, contentPath);
-            }
+            var parsedPath = parsePath(relativePath, '.jade');
 
             var contentOptions = {
-                path: contentPath,
+                path: parsedPath.path,
+                order: parsedPath.order,
                 _body: frontMatter.body
             }
             //copy attributes
@@ -150,23 +168,45 @@ var buildContentTree = function(options, onError) {
                 contentOptions[key] = frontMatter.attributes[key];
             }
 
-            //private structural stuff
-            contentOptions._root = contentTree;
-            contentOptions._parent = parent;
-
             var contentObject = new ContentModel(contentOptions);
 
-            if(parent) {
-                parent._children.push(contentObject);
-            }
-            contentMap[contentPath] = contentObject;
+            contentMap[parsedPath.path] = contentObject;
             contentList.push(contentObject);
 
-            if(isRoot) {
-                contentTree = contentObject;
+            cb(null, contentObject);
+        }))
+        .on('error', onError);
+};
+
+var buildContentTree = function(options, onError) {
+    return es.readArray(contentList)
+        .pipe(es.map(function(content, cb) {
+
+            var isRoot = false;
+            var parent;
+
+            if(content.path === '/') {
+                isRoot = true;
+            } else {
+                parent = findParent(contentMap, content.path);
             }
 
-            cb(null, file);
+            if(isNaN(content.order)) {
+                content.order = parent
+                    ? parent._children.length
+                    : 0;
+            }
+
+            if(parent) {
+                content._parent = parent;
+                parent._children.push(content);
+            }
+
+            if(isRoot) {
+                contentTree = content;
+            }
+
+            cb(null, content);
         }))
         .on('error', onError);
 };
@@ -184,6 +224,9 @@ var buildPages = function(options, onError) {
     };
     return es.readArray(contentList)
         .pipe(es.map(function(content, cb) {
+
+            model = content;
+
             var template = templatesMap[content.template];
             if(!template) {
                 cb(new Error('No template found named "' + String(content.template) + '" for content "' + content.path + '"'));
@@ -196,17 +239,22 @@ var buildPages = function(options, onError) {
             });
             var contentBody = 'include ./includes/globals.jade\n' + content._body;
             var htmlBody = jade.render(contentBody, locals);
+
             content.body = htmlBody;
             locals = _.assign({}, globalFunctions, options.globalFunctions, {
                 model: content
             });
             var html = template(locals);
+
             var filePath = content.path.substring(1);
             var fileOptions = {
                 path: path.join(filePath, 'index.html'),
                 contents: new Buffer(html)
             };
             var file = new File(fileOptions);
+
+            model = undefined;
+
             cb(null, file);
         }))
         .on('error', onError)
@@ -232,11 +280,15 @@ var buildSite = function(options, onSuccess, onError) {
     contentTree = undefined;
     contentMap = {};
     contentList = [];
+    model = undefined;
 
-    es.merge(buildTemplates(opts, onErrorHandler), buildContentTree(opts, onErrorHandler))
+    es.merge(buildTemplates(opts, onErrorHandler), buildContentList(opts, onErrorHandler))
         .on('end', function() {
-            buildPages(opts, onErrorHandler)
-                .on('end', onSuccessHandler);
+            buildContentTree(opts, onErrorHandler)
+                .on('end', function() {
+                    buildPages(opts, onErrorHandler)
+                        .on('end', onSuccessHandler);
+                })
         });
 };
 
