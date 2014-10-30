@@ -53,6 +53,11 @@ gulp.task('static2000', function(cb) {
 
 # Change Log
 
+## 0.1.3
+
+* Convert flat file list to folder structure.
+* Page sort order.
+
 ## 0.1.2
 
 * Bug fixes.
