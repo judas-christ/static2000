@@ -24,4 +24,4 @@ src/
 
 ## Sitemap generation
 
-Supply a `basePath` option when running Static2000 and it will generate an XML sitemap for the site. Pages with a `hidden` property set to `true` will not be included in the sitemap.
+Supply a `baseUrl` option when running Static2000 and it will generate an XML sitemap for the site. Pages with a `hidden` property set to `true` will not be included in the sitemap.
