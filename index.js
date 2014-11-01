@@ -171,6 +171,7 @@ var buildContentList = function(options, onError) {
             var contentOptions = {
                 path: parsedPath.path,
                 order: parsedPath.order,
+                hidden: false,
                 _body: frontMatter.body
             }
             //copy attributes
@@ -271,6 +272,38 @@ var buildPages = function(options, onError) {
         .pipe(fs.dest(options.dest))
 }
 
+var buildSitemap = function(options, onError) {
+    var baseUrl = options.baseUrl;
+
+    if(!baseUrl) {
+        console.log('No baseUrl defined; cannot generate XML sitemap');
+        return es.readArray([]);
+    }
+
+    baseUrl = baseUrl.replace(/\/$/, '');
+
+    var xmlStr = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+    xmlStr += contentList
+        .filter(function(contentObject) {
+            return contentObject.hidden === true;
+        })
+        .map(function(contentObject) {
+            return '<url><loc>' + baseUrl + contentObject.path + '</loc></url>';
+        })
+        .sort()
+        .join('');
+    xmlStr += '</urlset>';
+
+    var sitemapFile = new File({
+        path: 'sitemap.xml',
+        contents: new Buffer(xmlStr)
+    });
+
+    return es.readArray([sitemapFile])
+        .pipe(fs.dest(options.dest))
+        .on('error', onError);
+};
+
 var buildSite = function(options, onSuccess, onError) {
     // if(typeof options === 'function' && typeof onSuccess === 'function') {
     //     onError = onSuccess;
@@ -297,7 +330,10 @@ var buildSite = function(options, onSuccess, onError) {
             buildContentTree(opts, onErrorHandler)
                 .on('end', function() {
                     buildPages(opts, onErrorHandler)
-                        .on('end', onSuccessHandler);
+                        .on('end', function() {
+                            buildSitemap(opts, onErrorHandler)
+                                .on('end', onSuccessHandler);
+                        });
                 })
         });
 };

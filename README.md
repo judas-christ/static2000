@@ -28,6 +28,7 @@ See the [documentation](docs/README.md) for more information.
 * `templates` Source folder for templates.
 * `content` Source folder for content.
 * `globalFunctions` An object with functions that should be available on all pages and in all templates. Note that it is often better to use a jade mixin defined in `templates/includes/globals.jade` instead.
+* `baseUrl` Base URL for the site. Set this to create an XML sitemap when generating the site.
 
 ### API
 
@@ -52,6 +53,10 @@ gulp.task('static2000', function(cb) {
 ```
 
 # Change Log
+
+## 0.1.4
+
+* XML sitemap generation.
 
 ## 0.1.3
 

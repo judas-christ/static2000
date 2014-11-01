@@ -22,6 +22,12 @@ Type: `Number`
 
 The sort order for this page. Can be explicitly defined by prefixing the filename with a number and a dash. Eg. `2-page-name.jade` will become a page named `page-name` with an `order` of 2. Useful when pages should not be listed alphabetically.
 
+### model.hidden
+
+Type: `Boolean`
+
+Whether this page is hidden. Can be used for hiding pages in lists and a value of `true` will prevent the page from showing up in the generated sitemap.
+
 ### model.children([filter])
 
 Get all children of the current model, optionally filtered.
