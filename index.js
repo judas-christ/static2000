@@ -285,7 +285,7 @@ var buildSitemap = function(options, onError) {
     var xmlStr = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
     xmlStr += contentList
         .filter(function(contentObject) {
-            return contentObject.hidden === true;
+            return !contentObject.hidden;
         })
         .map(function(contentObject) {
             return '<url><loc>' + baseUrl + contentObject.path + '</loc></url>';
@@ -293,6 +293,7 @@ var buildSitemap = function(options, onError) {
         .sort()
         .join('');
     xmlStr += '</urlset>';
+
 
     var sitemapFile = new File({
         path: 'sitemap.xml',
