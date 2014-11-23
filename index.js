@@ -172,6 +172,7 @@ var buildContentList = function(options, onError) {
                 path: parsedPath.path,
                 order: parsedPath.order,
                 hidden: false,
+                modified: file.stat.mtime,
                 _body: frontMatter.body
             }
             //copy attributes
@@ -288,7 +289,7 @@ var buildSitemap = function(options, onError) {
             return !contentObject.hidden;
         })
         .map(function(contentObject) {
-            return '<url><loc>' + baseUrl + contentObject.path + '</loc></url>';
+            return '<url><loc>' + baseUrl + contentObject.path + '</loc><lastmod>' + contentObject.modified.toISOString() + '</lastmod></url>';
         })
         .sort()
         .join('');

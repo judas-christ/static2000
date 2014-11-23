@@ -28,6 +28,12 @@ Type: `Boolean`
 
 Whether this page is hidden. Can be used for hiding pages in lists and a value of `true` will prevent the page from showing up in the generated sitemap.
 
+### model.modified
+
+Type: `Date`
+
+Modified date for the source file parsed into this ContentModel. Used in the sitemap.
+
 ### model.children([filter])
 
 Get all children of the current model, optionally filtered.
