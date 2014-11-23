@@ -54,6 +54,10 @@ gulp.task('static2000', function(cb) {
 
 # Change Log
 
+## 0.1.5
+
+* Last modified date added to sitemap.
+
 ## 0.1.4
 
 * XML sitemap generation.

@@ -1,6 +1,6 @@
 {
   "name": "static2000",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "The simple static site generator",
   "homepage": "https://github.com/judas-christ/static2000",
   "main": "index.js",
