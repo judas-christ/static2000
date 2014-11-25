@@ -18,7 +18,10 @@
     "vinyl": "^0.4.3",
     "vinyl-fs": "^0.3.10"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "gulp-jshint": "^1.9.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -1,0 +1,7 @@
+{
+  "unused": true,
+  "undef": true,
+  "node": true,
+  "-W097": true,
+  "-W014": true
+}
