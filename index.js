@@ -28,7 +28,7 @@ var defaultOnSuccess = require('./lib/noop');
 // }
 
 //global state
-var state = require('./lib/state');
+var state = require('./lib/state')();
 
 //build functions
 var buildTemplates = require('./lib/buildTemplates')(state);

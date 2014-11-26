@@ -1,6 +1,6 @@
 {
   "name": "static2000",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "The simple static site generator",
   "homepage": "https://github.com/judas-christ/static2000",
   "main": "index.js",
@@ -19,11 +19,15 @@
     "vinyl-fs": "^0.3.10"
   },
   "devDependencies": {
+    "chai": "^1.10.0",
     "gulp": "^3.8.10",
-    "gulp-jshint": "^1.9.0"
+    "gulp-jshint": "^1.9.0",
+    "gulp-mocha": "^2.0.0",
+    "gulp-util": "^3.0.1",
+    "mocha": "^2.0.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "gulp mocha"
   },
   "repository": {
     "type": "git",

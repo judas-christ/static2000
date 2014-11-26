@@ -54,6 +54,11 @@ gulp.task('static2000', function(cb) {
 
 # Change Log
 
+## 0.1.6
+
+* Refactored code
+* Tests!
+
 ## 0.1.5
 
 * Last modified date added to sitemap.
