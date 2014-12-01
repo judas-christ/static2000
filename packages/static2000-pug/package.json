@@ -1,0 +1,26 @@
+{
+  "name": "static2000-jade",
+  "version": "0.1.0",
+  "description": "Jade adapter for Static2000",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/judas-christ/static2000-jade.git"
+  },
+  "keywords": [
+    "jade",
+    "static2000",
+    "static",
+    "site",
+    "generator"
+  ],
+  "author": "Daniel Hägglund",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/judas-christ/static2000-jade/issues"
+  },
+  "homepage": "https://github.com/judas-christ/static2000-jade",
+  "dependencies": {
+    "jade": "^1.8.1"
+  }
+}
