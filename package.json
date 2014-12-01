@@ -1,6 +1,6 @@
 {
   "name": "static2000",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "description": "The simple static site generator",
   "homepage": "https://github.com/judas-christ/static2000",
   "main": "index.js",
@@ -11,7 +11,6 @@
     "colors": "^1.0.3",
     "event-stream": "^3.1.7",
     "front-matter": "^0.2.0",
-    "jade": "^1.7.0",
     "lodash": "^2.4.1",
     "map-stream": "^0.1.0",
     "minimist": "^1.1.0",
