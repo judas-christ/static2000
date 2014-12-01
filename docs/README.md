@@ -28,7 +28,7 @@ $ static2000 --templateAdapter static2000-swig
 or
 
 ```js
-static2000({ templateAdapater: 'static2000-swig' });
+static2000({ templateAdapter: 'static2000-swig' });
 ```
 
 The default adapter name is `static2000-jade` so if you're using that, there's no need to specify it.
