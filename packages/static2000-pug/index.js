@@ -4,6 +4,7 @@
 var jade = require('jade');
 
 module.exports = {
+    templateExtension: '.jade',
     templateGlob: '*.jade',
     globalsInclude: 'include ./includes/globals.jade\n',
     compile: function(source, options) {
