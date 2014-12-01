@@ -1,0 +1,9 @@
+{% macro menu(root) %}
+    {% for page in root.children() %}
+        <a href="{{ page.relativePath() }}">{{ page.title }}</a>
+    {% endfor %}
+{% endmacro %}
+
+{% macro exampleMacro() %}
+    <small>This is a mixin available in all templates and pages</small>
+{% endmacro %}

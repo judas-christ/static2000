@@ -10,6 +10,12 @@ Via npm:
 $ npm install static2000
 ```
 
+You also need a template adapter, such as [static2000-jade](https://github.com/judas-christ/static2000-jade):
+
+```bash
+$ npm install static2000-jade --save-dev
+```
+
 ## Usage
 
 Static2000 takes templates and content and mashes them together to create a folder structure
@@ -17,8 +23,9 @@ and html files. It can be used from the command line or inside a node module and
 with Gulp. Gulp is the recommended method of running Static2000, since it does not have any
 CSS preprocessing or similar built in.
 
-At the moment, templates must use [jade](http://jade-lang.com/) with YAML front matter
-for defining properties on content pages. There are plans to support other template engines in the future.
+Templates and content can use [jade](http://jade-lang.com/) or [swig](http://paularmstrong.github.io/swig) with YAML front matter
+for defining properties on content pages using template adapters.
+
 
 See the [documentation](docs/README.md) for more information.
 
@@ -53,6 +60,10 @@ gulp.task('static2000', function(cb) {
 ```
 
 # Change Log
+
+## 0.2.0
+
+* Extracted template engines into adapters. _This is a breaking change. Static2000 now requires a template adapter to work, and none is included. Install with `npm i static2000-jade` for jade templates._
 
 ## 0.1.6
 

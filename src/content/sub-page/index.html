@@ -1,0 +1,18 @@
+---
+title: Sub page
+template: home
+---
+
+<p>This is a sub page</p>
+
+<p>These are my child pages:</p>
+
+<ul>
+    {% for child in model.children() %}
+        <li>
+            <a href="{{ child.relativePath() }}">{{ child.title }}</a>
+        </li>
+    {% endfor %}
+</ul>
+
+{{ globals.exampleMacro() }}

@@ -6,6 +6,7 @@ var _ = require('lodash');
 
 //default options
 var defaults = {
+    templateAdapter: 'static2000-jade',
     templates: path.join('src','templates'),
     content: path.join('src','content'),
     dest: 'www'
