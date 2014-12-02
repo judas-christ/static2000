@@ -17,8 +17,18 @@ This is the default template adapter for static2000. Install, create templates a
 
 ## Globals
 
+### Global include
+
 This adapter includes `[templates folder]/includes/globals.jade` in all files, templates and content, so mixins defined there are available both in the body of content and in templates:
 
 ```jade
 +my-mixin()
+```
+
+### Global functions
+
+The global functions are available without namespace in the templates:
+
+```jade
+- var visiblePages = query({ visible: true });
 ```

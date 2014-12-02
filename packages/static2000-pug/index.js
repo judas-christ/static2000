@@ -15,10 +15,6 @@ module.exports = {
         return jade.compile(source, jadeOptions);
     },
     render: function(source, options) {
-        var jadeOptions = {
-            filename: options.filename,
-            model: options.model
-        };
-        return jade.render(source, jadeOptions);
+        return jade.render(source, options);
     }
 };
