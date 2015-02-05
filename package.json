@@ -10,9 +10,11 @@
   "dependencies": {
     "colors": "^1.0.3",
     "event-stream": "^3.1.7",
+    "findup-sync": "^0.2.1",
     "front-matter": "^0.2.0",
     "lodash": "^2.4.1",
     "map-stream": "^0.1.0",
+    "minimatch": "^2.0.1",
     "minimist": "^1.1.0",
     "vinyl": "^0.4.3",
     "vinyl-fs": "^0.3.10"

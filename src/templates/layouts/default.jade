@@ -6,6 +6,7 @@ html
         title
             block title
                 | #{model.title}
+        meta(name="og:url", content=absoluteUrl(model.path))
     body
         header
             a(href=model.root().relativePath()) Site Name
