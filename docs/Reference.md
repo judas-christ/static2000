@@ -64,9 +64,9 @@ Type: `String`
 
 The base path to get a relative path from. If it's not explicitly supplied, the current model's `path` property will be used.
 
-## Global functions
+## Globals
 
-The global functions are utility functions for finding content.
+There are a few global utility functions used primarily for finding content.
 
 ### getByPath(path)
 
@@ -85,6 +85,10 @@ Get all page models matching the filter.
 ### _
 
 [Lodash](https://lodash.com/) is available in templates for convenience.
+
+### plugins
+
+Container for available plugins.
 
 ## Filtering
 

@@ -4,6 +4,7 @@
 * [Reference](Reference.md)
 * [Folder structure](#folder-structure)
 * [Sitemap generation](#sitemap-generation)
+* [Global plugins](GlobalPlugins.md)
 
 
 ## Template adapters
