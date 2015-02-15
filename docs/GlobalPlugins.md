@@ -1,6 +1,6 @@
 # Global Plugins
 
-Global plugins are extensions for use in the templates, written as node modules. Plugins should export a function that takes a single options argument. The options are those used by Static2000 when building the site, so you can get to the baseUrl property for instance if one has been specified.
+Global plugins are extensions for use in the templates, written as node modules. Plugins should export a function that takes two arguments: the first is the options used throughout Static2000 and contains the basePath if available, and the second is an `Array` of all `ContentModel`s for this site.
 
 ## Naming
 
@@ -15,7 +15,7 @@ All plugins added as dependencies to the current `package.json` are automaticall
 A hello world plugin named static2000-global-hello-world could look like this:
 
 ```js
-module.exports = function(options) {
+module.exports = function(options, contentList) {
 	return "Hello world!";
 };
 ```

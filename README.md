@@ -62,6 +62,10 @@ gulp.task('static2000', function(cb) {
 
 # Change Log
 
+## 0.2.1
+
+* Added loading of global plugins. It's now possible to write plugins that extend the globals object in templates and have access to options and a list of all content models.
+
 ## 0.2.0
 
 * Extracted template engines into adapters. _This is a breaking change. Static2000 now requires a template adapter to work, and none is included. Install with `npm i static2000-jade` for jade templates._
