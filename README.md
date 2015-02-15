@@ -34,7 +34,7 @@ See the [documentation](docs/README.md) for more information.
 * `dest` Destination folder for generated html.
 * `templates` Source folder for templates.
 * `content` Source folder for content.
-* `globalFunctions` An object with functions that should be available on all pages and in all templates. Note that it is often better to use a jade mixin defined in `templates/includes/globals.jade` instead.
+* `globalFunctions` An object with functions that should be available on all pages and in all templates. Note that it is often better to use a jade mixin defined in `templates/includes/globals.jade` or a [global plugin](docs/GlobalPlugins.md) instead.
 * `baseUrl` Base URL for the site. Set this to create an XML sitemap when generating the site.
 * `templateAdapter` The template adapter to use. Default is `static2000-jade`.
 
