@@ -15,4 +15,7 @@ for(var key in args) {
 //and positional ones
 delete args['_'];
 
+if(!('dest' in args))
+    args.dest = 'www';
+
 static2000(args);

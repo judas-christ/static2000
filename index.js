@@ -1,6 +1,7 @@
 'use strict';
 
 var es = require('event-stream');
+var fs = require('vinyl-fs');
 var path = require('path');
 var _ = require('lodash');
 
@@ -8,8 +9,7 @@ var _ = require('lodash');
 var defaults = {
     templateAdapter: 'static2000-jade',
     templates: path.join('src','templates'),
-    content: path.join('src','content'),
-    dest: 'www'
+    content: path.join('src','content')
 };
 
 //default stream event handlers
@@ -61,17 +61,34 @@ var buildSite = function(options, onSuccess, onError) {
     //reset global variables
     state.reset();
 
+    //create output stream
+    var outStream = es.through(function(data) {
+        this.emit('data', data);
+    });
+    //and make sure generated files are written to disk if dest option was specified
+    if(opts.dest) {
+        outStream
+            .pipe(fs.dest(opts.dest));
+    }
+    var outStreamWrite = outStream.write.bind(outStream);
+
     es.merge(buildTemplates(opts, onErrorHandler), buildContentList(opts, onErrorHandler))
         .on('end', function() {
             buildContentTree(opts, onErrorHandler)
                 .on('end', function() {
                     buildPages(opts, onErrorHandler)
+                        .on('data', outStreamWrite)
                         .on('end', function() {
                             buildSitemap(opts, onErrorHandler)
-                                .on('end', onSuccessHandler);
+                                .on('data', outStreamWrite)
+                                .on('end', function() {
+                                    outStream.end();
+                                    onSuccessHandler();
+                                });
                         });
                 });
         });
+    return outStream;
 };
 
 module.exports = buildSite;
