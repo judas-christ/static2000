@@ -1,6 +1,8 @@
 'use strict';
 var yeoman = require('yeoman-generator');
 
+var templateEngines = require('../../lib/templateAdapters');
+
 module.exports = yeoman.generators.NamedBase.extend({
   initializing: function () {
     this.log('Generating template: ' + this.name);
@@ -8,7 +10,7 @@ module.exports = yeoman.generators.NamedBase.extend({
 
   configuring: function() {
     this.baseUrl = this.config.get('baseUrl');
-    this.templateEngine = this.config.get('templateEngine');
+    this.templateEngine = templateEngines[this.config.get('templateEngine')];
   },
 
   writing: function () {

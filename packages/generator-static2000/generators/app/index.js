@@ -3,44 +3,15 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 
-var templateEngines = {
-  jade: {
-    name: 'jade',
-    adapter: 'static2000-jade',
-    glob: 'jade',
-    ext: 'jade',
-    comment: '//- <%= comment %>\n'
-  },
-  swig: {
-    name: 'swig',
-    adapter: 'static2000-swig',
-    glob: 'html',
-    ext: 'html',
-    comment: '{# <%= comment %> #}'
-  }
-};
-
-var cssPreprocessors = {
-  sass: {
-    name: 'sass',
-    plugin: 'gulp-sass',
-    glob: '{sass,scss}',
-    ext: 'scss'
-  },
-  less: {
-    name: 'less',
-    plugin: 'gulp-less',
-    glob: 'less',
-    ext: 'less'
-  }
-};
+var templateEngines = require('../../lib/templateAdapters');
+var cssPreprocessors = require('../../lib/cssPreprocessors');
 
 module.exports = yeoman.generators.Base.extend({
 
   constructor: function() {
     yeoman.generators.Base.apply(this, arguments);
 
-    this.argument('name', {type:String, required: false, defaults: this.appname });
+    this.argument('name', {type: String, required: false, defaults: this.appname });
   },
 
   initializing: function () {
@@ -95,31 +66,31 @@ module.exports = yeoman.generators.Base.extend({
       this.baseUrl = baseUrl ? '\''+baseUrl+'\'' : 'undefined';
 
       this.config.set('baseUrl', baseUrl);
-      this.config.set('templateEngine', this.templateEngine);
-      this.config.set('cssPreprocessor', this.cssPreprocessor);
+      this.config.set('templateEngine', props.templateEngine);
+      this.config.set('cssPreprocessor', props.cssPreprocessor);
 
       done();
     }.bind(this));
   },
 
-  installNpmPackages: function() {
-    this.npmInstall(
-      [
-        'static2000',
-        this.templateEngine.adapter,
-        'gulp',
-        'gulp-load-plugins',
-        'gulp-util',
-        this.cssPreprocessor.plugin,
-        'gulp-autoprefixer',
-        'gulp-csso',
-        'gulp-uglify',
-        'browser-sync',
-        'del'
-      ],{
-        saveDev: true
-      });
-  },
+  // installNpmPackages: function() {
+  //   this.npmInstall(
+  //     [
+  //       'static2000',
+  //       this.templateEngine.adapter,
+  //       'gulp',
+  //       'gulp-load-plugins',
+  //       'gulp-util',
+  //       this.cssPreprocessor.plugin,
+  //       'gulp-autoprefixer',
+  //       'gulp-csso',
+  //       'gulp-uglify',
+  //       'browser-sync',
+  //       'del'
+  //     ],{
+  //       saveDev: true
+  //     });
+  // },
 
   writing: {
     app: function () {
