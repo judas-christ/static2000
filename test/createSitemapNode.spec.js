@@ -27,7 +27,8 @@ describe('createSitemapNode', function() {
         var modifiedDate = new Date(2014, 0, 1, 12, 12, 12);
         var fakeContentObject = { path: '/fake-path', modified: modifiedDate }
         var sitemapNode = createSitemapNode(fakeContentObject);
-        expect(sitemapNode).to.contain('<lastmod>2014-01-01T11:12:12.000Z</lastmod>');
+        var dateString = modifiedDate.toISOString();
+        expect(sitemapNode).to.contain('<lastmod>' + dateString + '</lastmod>');
     });
 
 });
