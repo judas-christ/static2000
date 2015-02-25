@@ -1,4 +1,4 @@
-# Static2000
+# Static2000 [![Build Status](https://secure.travis-ci.org/judas-christ/static2000.png?branch=master)](https://travis-ci.org/judas-christ/static2000)
 
 The simple static site generator built on node.js
 
