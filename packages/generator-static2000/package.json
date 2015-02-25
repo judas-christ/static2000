@@ -1,6 +1,6 @@
 {
   "name": "generator-static2000",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Yeoman generator for Static2000",
   "license": "MIT",
   "main": "generators/app/index.js",
@@ -25,7 +25,8 @@
     "app"
   ],
   "keywords": [
-    "yeoman-generator", "static2000"
+    "yeoman-generator",
+    "static2000"
   ],
   "dependencies": {
     "yeoman-generator": "^0.18.0",
