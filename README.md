@@ -26,6 +26,11 @@ CSS preprocessing or similar built in.
 Templates and content can use [jade](http://jade-lang.com/) or [swig](http://paularmstrong.github.io/swig) with YAML front matter
 for defining properties on content pages using template adapters.
 
+Static2000 now has a [Yeoman](http://yeoman.io/) generator which simplifies setup considerably. Read about it here: [generator-static2000](https://github.com/judas-christ/generator-static2000) and install it with
+
+```bash
+$ npm install -g generator-static2000
+```
 
 See the [documentation](docs/README.md) for more information.
 
