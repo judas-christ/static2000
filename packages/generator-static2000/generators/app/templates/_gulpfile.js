@@ -72,6 +72,6 @@ gulp.task('build', ['styles', 'scripts', 'images', 'static2000']);
 
 gulp.task('default', ['build', 'serve'], function() {
   gulp.watch('src/styles/**/*.<%= cssPreprocessor.glob %>', ['styles']);
-  gulp.watch('src/scripts/**/*.js', ['scripts'], browserSync.reload);
-  gulp.watch('src/**/*.<%= templateEngine.glob %>', ['static2000'], browserSync.reload);
+  gulp.watch('src/scripts/**/*.js', ['scripts', browserSync.reload]);
+  gulp.watch('src/**/*.<%= templateEngine.glob %>', ['static2000', browserSync.reload]);
 });

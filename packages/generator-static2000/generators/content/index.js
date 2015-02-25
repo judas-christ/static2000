@@ -6,7 +6,6 @@ module.exports = yeoman.generators.NamedBase.extend({
     this.log('Generating content: ' + this.name);
 
     this.baseUrl = this.config.get('baseUrl');
-    this.templateEngine = this.config.get('templateEngine');
 
     this.argument('templateName', { type: String, required: true });
     this.option('flat', { desc: 'Create files in flat structure instead of folders' });
@@ -23,6 +22,10 @@ module.exports = yeoman.generators.NamedBase.extend({
       }
       this.path = path;
     }
+  },
+
+  configuring: function() {
+    this.templateEngine = this.config.get('templateEngine');
   },
 
   writing: function () {

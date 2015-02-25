@@ -7,8 +7,18 @@
     <link rel="stylesheet" href="<%= baseUrl %>/styles/styles.css">
   </head>
   <body>
-    {% block body %}
-    {% endblock %}
+    <header>
+      <nav>
+        <a href="{{ model.root().relativePath() }}">/</a>
+        {% for page in model.root().children() %}
+          <a href="{{ page.relativePath() }}">{{ page.path }}</a>
+        {% endfor %}
+      </nav>
+    </header>
+    <main>
+      {% block body %}
+      {% endblock %}
+    </main>
     <script src="<%= baseUrl %>/scripts/scripts.js" async></script>
   </body>
 </html>
