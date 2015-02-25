@@ -28,7 +28,7 @@
     "mocha": "^2.1.0"
   },
   "scripts": {
-    "test": "gulp mocha"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
