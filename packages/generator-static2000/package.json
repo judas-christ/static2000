@@ -3,8 +3,14 @@
   "version": "0.0.0",
   "description": "Yeoman generator for Static2000",
   "license": "MIT",
-  "main": "app/index.js",
-  "repository": "judas-christ/generator-static2000",
+  "main": "generators/app/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/judas-christ/generator-static2000.git"
+  },
+  "bugs": {
+    "url": "https://github.com/judas-christ/generator-static2000/issues"
+  },
   "author": {
     "name": "Daniel Hägglund",
     "url": "https://github.com/judas-christ"
