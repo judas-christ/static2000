@@ -15,11 +15,9 @@
 
 ## Getting Started
 
-Install: `npm install -g generator-static2000`
-
-Run: `yo static2000`
-
-Run `gulp build` to build the site or plain old `gulp` to build and preview it in a browser.
+* Install: `npm install -g generator-static2000`
+* Run: `yo static2000`
+* Run `gulp build` to build the site or plain old `gulp` to build and preview it in a browser.
 
 ## Commands
 
