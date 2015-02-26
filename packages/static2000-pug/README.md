@@ -8,7 +8,7 @@ Jade adapter for [Static2000](https://github.com/judas-christ/static2000).
 Via npm:
 
 ```bash
-$ npm install static2000-jade
+npm install static2000-jade
 ```
 
 ## Usage
