@@ -4,7 +4,8 @@
   "dependencies": {},
   "devDependencies": {
     "static2000": "^0.3.0",<% if(templateEngine.name == 'jade') { %>
-    "static2000-jade": "^0.1.2",<% } %><% if(templateEngine.name == 'swig') { %>
+    "static2000-jade": "^0.1.2",<% } %><% if (templateEngine.name == 'nunjucks') { %>
+    "static2000-nunjucks": "^0.1.0",<% } %><% if(templateEngine.name == 'swig') { %>
     "static2000-swig": "^0.1.0",<% } %>
     "browser-sync": "^2.2.1",
     "del": "^1.1.1",

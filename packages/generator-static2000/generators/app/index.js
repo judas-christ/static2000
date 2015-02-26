@@ -36,14 +36,26 @@ module.exports = yeoman.generators.Base.extend({
       type: 'list',
       name: 'templateEngine',
       message: 'Which template engine do you prefer?',
-      choices: [{name: 'Jade', value: 'jade'}, {name: 'Swig', value: 'swig'}],
+      choices: Object.keys(templateEngines).reduce(function(arr, key) {
+        arr.push({
+          name: templateEngines[key].display,
+          value: templateEngines[key].name
+        });
+        return arr;
+      }, []),
       store: true,
       default: 0
     },{
       type: 'list',
       name: 'cssPreprocessor',
       message: 'Which CSS preprocessor do you prefer?',
-      choices: [{name: 'Sass', value: 'sass'},{name: 'Less', value: 'less'}],
+      choices: Object.keys(cssPreprocessors).reduce(function(arr, key) {
+        arr.push({
+          name: cssPreprocessors[key].display,
+          value: cssPreprocessors[key].name
+        });
+        return arr;
+      }, []),
       store: true,
       default: 0
     },{
@@ -113,15 +125,16 @@ module.exports = yeoman.generators.Base.extend({
       //create globals file
       this.fs.write(
         this.destinationPath('src/templates/includes/globals.' + this.templateEngine.ext),
-        this.engine(this.templateEngine.comment, { comment: 'Put your global utilities here, they will be available in all templates and content' }));
+        this.engine(this.templateEngine.comment, { comment: 'Put your global utilities here, they will be available in all templates and content' })
+      );
 
       //create empty style and script files
       this.fs.write(
         this.destinationPath('src/styles/styles.' + this.cssPreprocessor.ext),
-        'html { color: gold; }\n'
+        this.engine(this.cssPreprocessor.comment, { comment: 'Style it up in here' })
       );
       this.fs.write(
-        this.destinationPath('src/scripts/script.js'),
+        this.destinationPath('src/scripts/scripts.js'),
         '\'use strict\'\n'
       );
 
