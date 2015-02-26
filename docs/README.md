@@ -12,24 +12,25 @@
 Since version 0.2.0, Static2000 does no longer include a template engine but instead requires you to install and specify a template adapter. At the moment there are two available:
 
 * [static2000-jade](https://github.com/judas-christ/static2000-jade) for [jade](http://jade-lang.com/)
+* [static2000-nunjucks](https://github.com/judas-christ/static2000-nunjucks) for [nunjucks](http://mozilla.github.io/nunjucks/)
 * [static2000-swig](https://github.com/judas-christ/static2000-swig) for [swig](http://paularmstrong.github.io/swig)
 
 Install the one you want to use with npm:
 
 ```bash
-$ npm install static2000-jade
+npm install static2000-jade
 ```
 
 and set the `templateAdapter` option to the name of the adapter:
 
 ```bash
-$ static2000 --templateAdapter static2000-swig
+static2000 --templateAdapter static2000-nunjucks
 ```
 
 or
 
 ```js
-static2000({ templateAdapter: 'static2000-swig' });
+static2000({ templateAdapter: 'static2000-nunjucks' });
 ```
 
 The default adapter name is `static2000-jade` so if you're using that, there's no need to specify it.
@@ -57,3 +58,13 @@ src/
 ## Sitemap generation
 
 Supply a `baseUrl` option when running Static2000 and it will generate an XML sitemap for the site. Pages with a `hidden` property set to `true` will not be included in the sitemap.
+
+```bash
+static2000 --baseUrl http://example.com
+```
+
+or
+
+```js
+static2000({ baseUrl: 'http://example.com' });
+```

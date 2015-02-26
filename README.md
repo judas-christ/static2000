@@ -7,29 +7,25 @@ The simple static site generator built on node.js
 Via npm:
 
 ```bash
-$ npm install static2000
+npm install static2000
 ```
 
 You also need a template adapter, such as [static2000-jade](https://github.com/judas-christ/static2000-jade):
 
 ```bash
-$ npm install static2000-jade --save-dev
+npm install static2000-jade --save-dev
 ```
 
 ## Usage
 
-Static2000 takes templates and content and mashes them together to create a folder structure
-and html files. It can be used from the command line or inside a node module and plays nice
-with Gulp. Gulp is the recommended method of running Static2000, since it does not have any
-CSS preprocessing or similar built in.
+Static2000 takes templates and content and mashes them together to create a folder structure and html files. It can be used from the command line or inside a node module and plays nice with Gulp. Gulp is the recommended method of running Static2000, since it does not have any CSS preprocessing or similar built in.
 
-Templates and content can use [jade](http://jade-lang.com/) or [swig](http://paularmstrong.github.io/swig) with YAML front matter
-for defining properties on content pages using template adapters.
+Templates and content can use [jade](http://jade-lang.com/), [nunjucks](http://mozilla.github.io/nunjucks/) or [swig](http://paularmstrong.github.io/swig) with YAML front matter for defining properties on content pages using template adapters.
 
 Static2000 now has a [Yeoman](http://yeoman.io/) generator which simplifies setup considerably. Read about it here: [generator-static2000](https://github.com/judas-christ/generator-static2000) and install it with
 
 ```bash
-$ npm install -g generator-static2000
+npm install -g generator-static2000
 ```
 
 See the [documentation](docs/README.md) for more information.
