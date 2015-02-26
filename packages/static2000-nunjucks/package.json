@@ -1,0 +1,38 @@
+{
+  "name": "static2000-nunjucks",
+  "version": "0.0.1",
+  "description": "Nunjucks adapter for Static2000",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/judas-christ/static2000-nunjucks.git"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "nunjucks",
+    "static2000"
+  ],
+  "author": {
+    "name": "Daniel Hägglund",
+    "url": "https://github.com/judas-christ"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/judas-christ/static2000-nunjucks/issues"
+  },
+  "homepage": "https://github.com/judas-christ/static2000-nunjucks",
+  "dependencies": {
+    "nunjucks": "^1.2.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.1.0"
+  },
+  "peerDependencies": {
+    "static2000": "^0.3.0"
+  }
+}
