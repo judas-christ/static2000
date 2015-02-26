@@ -22,5 +22,8 @@
   "homepage": "https://github.com/judas-christ/static2000-jade",
   "dependencies": {
     "jade": "^1.8.1"
+  },
+  "peerDependencies": {
+    "static2000": "^0.3.0"
   }
 }
