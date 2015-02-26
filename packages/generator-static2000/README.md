@@ -5,7 +5,7 @@
 ## Features
 
 * Static2000
-* Jade or Swig templates
+* Jade, Nunjucks or Swig templates
 * Gulp
 * Autoprefixer
 * Sass or Less
