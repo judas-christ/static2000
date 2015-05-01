@@ -75,9 +75,9 @@ var buildSite = function(options, onSuccess, onError) {
 
     es.merge(buildTemplates(opts, onErrorHandler), buildContentList(opts, onErrorHandler))
         .on('end', function() {
-            compileContentBodies(opts, onErrorHandler)
+            buildContentTree(opts, onErrorHandler)
                 .on('end', function() {
-                    buildContentTree(opts, onErrorHandler)
+                    compileContentBodies(opts, onErrorHandler)
                         .on('end', function() {
                             buildPages(opts, onErrorHandler)
                                 .on('data', outStreamWrite)
