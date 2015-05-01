@@ -1,12 +1,18 @@
 {
   "name": "static2000",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "The simple static site generator",
   "homepage": "https://github.com/judas-christ/static2000",
   "main": "index.js",
   "bin": {
     "static2000": "./bin/static2000"
   },
+  "files": [
+    "index.js",
+    "lib",
+    "bin",
+    "LICENSE"
+  ],
   "dependencies": {
     "colors": "^1.0.3",
     "event-stream": "^3.2.2",

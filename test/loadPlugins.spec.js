@@ -16,7 +16,7 @@ var testState = {
 
 describe('loadPlugins', function() {
 
-    it('should call plugin functions with options (object) and content list (array)', function() {
+    it('should call plugin functions with correct arguments', function() {
         loadPlugins({
             lazy: false,
             config: {
@@ -27,12 +27,13 @@ describe('loadPlugins', function() {
             },
             requireFn: function(name) {
                 return function(options, contentList) {
+                    expect(arguments.length).to.equal(2);
                     expect(options).to.equal(testOptions);
                     expect(contentList).to.equal(testState.contentList);
                     return 'fake plugin';
                 }
             }
-        }, testOptions, testState);
+        }, testOptions, testState.contentList);
     });
 
 
@@ -50,7 +51,7 @@ describe('loadPlugins', function() {
                     return 'fake plugin';
                 }
             }
-        }, testOptions, testState);
+        }, testOptions, testState.contentList);
 
         expect(plugins).to.have.property('shouldBeLoaded');
         expect(plugins).to.not.have.property('shouldNotBeLoaded');
