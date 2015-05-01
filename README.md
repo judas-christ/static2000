@@ -64,6 +64,10 @@ gulp.task('static2000', function() {
 
 # Change Log
 
+## 0.4.0
+
+* Model plugins.
+
 ## 0.3.0
 
 * Now returns a stream of generated files. Makes it easy to post-process the files with plugins when using gulp.
