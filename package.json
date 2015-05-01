@@ -7,6 +7,12 @@
   "bin": {
     "static2000": "./bin/static2000"
   },
+  "files": [
+    "index.js",
+    "lib",
+    "bin",
+    "LICENSE"
+  ],
   "dependencies": {
     "colors": "^1.0.3",
     "event-stream": "^3.2.2",

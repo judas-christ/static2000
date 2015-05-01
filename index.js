@@ -34,6 +34,7 @@ var state = require('./lib/state')();
 //build functions
 var buildTemplates = require('./lib/buildTemplates')(state);
 var buildContentList = require('./lib/buildContentList')(state);
+var compileContentBodies = require('./lib/compileContentBodies')(state);
 var buildContentTree = require('./lib/buildContentTree')(state);
 var buildPages = require('./lib/buildPages')(state);
 var buildSitemap = require('./lib/buildSitemap')(state);
@@ -74,19 +75,23 @@ var buildSite = function(options, onSuccess, onError) {
 
     es.merge(buildTemplates(opts, onErrorHandler), buildContentList(opts, onErrorHandler))
         .on('end', function() {
-            buildContentTree(opts, onErrorHandler)
+            compileContentBodies(opts, onErrorHandler)
                 .on('end', function() {
-                    buildPages(opts, onErrorHandler)
-                        .on('data', outStreamWrite)
+                    buildContentTree(opts, onErrorHandler)
                         .on('end', function() {
-                            buildSitemap(opts, onErrorHandler)
+                            buildPages(opts, onErrorHandler)
                                 .on('data', outStreamWrite)
                                 .on('end', function() {
-                                    outStream.end();
-                                    onSuccessHandler();
+                                    buildSitemap(opts, onErrorHandler)
+                                        .on('data', outStreamWrite)
+                                        .on('end', function() {
+                                            outStream.end();
+                                            onSuccessHandler();
+                                        });
                                 });
                         });
                 });
+
         });
     return outStream;
 };
