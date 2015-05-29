@@ -64,6 +64,10 @@ gulp.task('static2000', function() {
 
 # Change Log
 
+## 0.4.1
+
+* Updated vinyl-fs dependency.
+
 ## 0.4.0
 
 * Model plugins.
