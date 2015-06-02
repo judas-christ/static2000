@@ -26,7 +26,7 @@ And would be used in a Jade template like so:
 h1= plugins.helloWorld
 ```
 
-Or in a Swig template:
+Or in a Nunjucks template:
 
 ```htmldjango
 <h1>{{ globals.plugins.helloWorld }}</h1>

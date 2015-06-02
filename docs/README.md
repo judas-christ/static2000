@@ -14,7 +14,6 @@ Since version 0.2.0, Static2000 does no longer include a template engine but ins
 
 * [static2000-jade](https://github.com/judas-christ/static2000-jade) for [jade](http://jade-lang.com/)
 * [static2000-nunjucks](https://github.com/judas-christ/static2000-nunjucks) for [nunjucks](http://mozilla.github.io/nunjucks/)
-* [static2000-swig](https://github.com/judas-christ/static2000-swig) for [swig](http://paularmstrong.github.io/swig)
 
 Install the one you want to use with npm:
 
