@@ -31,8 +31,5 @@
   },
   "devDependencies": {
     "mocha": "^2.1.0"
-  },
-  "peerDependencies": {
-    "static2000": "^0.3.0"
   }
 }
