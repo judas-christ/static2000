@@ -9,13 +9,13 @@ var args = minimist(argv.slice(2));
 
 //remove empty options
 for(var key in args) {
-    if(!args[key])
-        delete args[key];
+  if(!args[key])
+    delete args[key];
 }
 //and positional ones
 delete args['_'];
 
 if(!('dest' in args))
-    args.dest = 'www';
+  args.dest = 'www';
 
 static2000(args);

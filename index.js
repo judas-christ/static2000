@@ -7,9 +7,9 @@ var _ = require('lodash');
 
 //default options
 var defaults = {
-    templateAdapter: 'static2000-jade',
-    templates: path.join('src','templates'),
-    content: path.join('src','content')
+  templateAdapter: 'static2000-jade',
+  templates: path.join('src', 'templates'),
+  content: path.join('src', 'content')
 };
 
 //default stream event handlers
@@ -40,60 +40,43 @@ var buildPages = require('./lib/buildPages')(state);
 var buildSitemap = require('./lib/buildSitemap')(state);
 
 var buildSite = function(options, onSuccess, onError) {
-    // if(typeof options === 'function' && typeof onSuccess === 'function') {
-    //     onError = onSuccess;
-    //     onSuccess = options;
-    //     options = undefined;
-    // }
-    var opts = _.assign({}, defaults, options);
 
-    var onErrorHandler = function(error) {
-        (onError || defaultOnError)(error);
-        this.emit('end');
-    };
-    var onSuccessHandler = onSuccess || defaultOnSuccess;
+  var opts = _.assign({}, defaults, options);
 
-    //get template adapter here
-    var templateAdapter = opts.templateAdapter;
-    if(templateAdapter.indexOf('static2000-') < 0)
-        templateAdapter = 'static2000-' + templateAdapter;
-    opts.templateAdapter = require(templateAdapter);
+  var onErrorHandler = function(error) {
+    (onError || defaultOnError)(error);
+    this.emit('end');
+  };
+  var onSuccessHandler = onSuccess || defaultOnSuccess;
 
-    //reset global variables
-    state.reset();
+  //get template adapter here
+  var templateAdapter = opts.templateAdapter;
+  if (templateAdapter.indexOf('static2000-') < 0)
+    templateAdapter = 'static2000-' + templateAdapter;
+  opts.templateAdapter = require(templateAdapter);
 
-    //create output stream
-    var outStream = es.through(function(data) {
-        this.emit('data', data);
-    });
-    //and make sure generated files are written to disk if dest option was specified
-    if(opts.dest) {
-        outStream
-            .pipe(fs.dest(opts.dest));
-    }
-    var outStreamWrite = outStream.write.bind(outStream);
+  //reset global variables
+  state.reset();
 
-    es.merge(buildTemplates(opts, onErrorHandler), buildContentList(opts, onErrorHandler))
+  //create output stream
+  var pagesStream = opts.dest ? fs.dest(opts.dest) : es.through();
+  var sitemapStream = opts.dest ? fs.dest(opts.dest) : es.through();
+
+  es.merge(buildTemplates(opts, onErrorHandler), buildContentList(opts, onErrorHandler))
+    .on('end', function() {
+      buildSitemap(opts, onErrorHandler)
+        .pipe(sitemapStream);
+      buildContentTree(opts, onErrorHandler)
         .on('end', function() {
-            buildContentTree(opts, onErrorHandler)
-                .on('end', function() {
-                    compileContentBodies(opts, onErrorHandler)
-                        .on('end', function() {
-                            buildPages(opts, onErrorHandler)
-                                .on('data', outStreamWrite)
-                                .on('end', function() {
-                                    buildSitemap(opts, onErrorHandler)
-                                        .on('data', outStreamWrite)
-                                        .on('end', function() {
-                                            outStream.end();
-                                            onSuccessHandler();
-                                        });
-                                });
-                        });
-                });
-
+          compileContentBodies(opts, onErrorHandler)
+            .on('end', function() {
+              buildPages(opts, onErrorHandler)
+                .pipe(pagesStream);
+            });
         });
-    return outStream;
+    });
+  return es.merge(pagesStream, sitemapStream)
+    .on('end', onSuccessHandler);
 };
 
 module.exports = buildSite;
