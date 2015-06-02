@@ -1,6 +1,6 @@
 {
   "name": "static2000-jade",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Jade adapter for Static2000",
   "main": "index.js",
   "repository": {
@@ -21,9 +21,6 @@
   },
   "homepage": "https://github.com/judas-christ/static2000-jade",
   "dependencies": {
-    "jade": "^1.8.1"
-  },
-  "peerDependencies": {
-    "static2000": "^0.3.0"
+    "jade": "^1.10.0"
   }
 }
