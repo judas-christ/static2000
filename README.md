@@ -64,6 +64,12 @@ gulp.task('static2000', function() {
 
 # Change Log
 
+## 0.4.2
+
+* Parallellized sitemap and page generation.
+* Updated mocha and minimatch dependencies.
+* Removed gulp.
+
 ## 0.4.1
 
 * Updated vinyl-fs dependency.
