@@ -17,12 +17,12 @@ module.exports = {
     ext: 'html',
     comment: '{# <%= comment %> #}\n'
   },
-  swig: {
-    name: 'swig',
-    display: 'Swig',
-    adapter: 'static2000-swig',
-    glob: 'html',
-    ext: 'html',
-    comment: '{# <%= comment %> #}\n'
-  }
+  // swig: {
+  //   name: 'swig',
+  //   display: 'Swig',
+  //   adapter: 'static2000-swig',
+  //   glob: 'html',
+  //   ext: 'html',
+  //   comment: '{# <%= comment %> #}\n'
+  // }
 };
