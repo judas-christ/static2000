@@ -51,8 +51,9 @@ var buildSite = function(options, onSuccess, onError) {
 
   //get template adapter here
   var templateAdapter = opts.templateAdapter;
-  if (templateAdapter.indexOf('static2000-') < 0)
+  if (templateAdapter.indexOf('static2000-') < 0) {
     templateAdapter = 'static2000-' + templateAdapter;
+  }
   opts.templateAdapter = require(templateAdapter);
 
   //reset global variables
