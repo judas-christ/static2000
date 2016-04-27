@@ -3,6 +3,10 @@
   "version": "0.1.4",
   "description": "Pug adapter for Static2000",
   "main": "index.js",
+  "files": [
+    "index.js",
+    "LICENSE"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/judas-christ/static2000-pug.git"
@@ -23,5 +27,12 @@
   "homepage": "https://github.com/judas-christ/static2000-pug",
   "dependencies": {
     "pug": "^2.0.0-alpha6"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5",
+    "should": "^8.3.1"
+  },
+  "scripts": {
+    "test": "mocha"
   }
 }
