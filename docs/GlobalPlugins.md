@@ -20,7 +20,7 @@ module.exports = function(options, contentList) {
 };
 ```
 
-And would be used in a Jade template like so:
+And would be used in a Pug template like so:
 
 ```jade
 h1= plugins.helloWorld

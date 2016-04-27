@@ -7,7 +7,7 @@ var _ = require('lodash');
 
 //default options
 var defaults = {
-  templateAdapter: 'static2000-jade',
+  templateAdapter: 'static2000-pug',
   templates: path.join('src', 'templates'),
   content: path.join('src', 'content')
 };
@@ -15,18 +15,6 @@ var defaults = {
 //default stream event handlers
 var defaultOnError = require('./lib/defaultOnError');
 var defaultOnSuccess = require('./lib/noop');
-
-// function stringifyContent(key, value) {
-//     return key.indexOf('_') === 0
-//         ? undefined
-//         : typeof value === 'function'
-//             ? String(value)
-//             : value;
-// }
-
-// function jsonify(obj) {
-//     return JSON.stringify(obj, stringifyContent, 2);
-// }
 
 //global state
 var state = require('./lib/state')();
