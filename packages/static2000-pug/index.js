@@ -1,20 +1,20 @@
-//jade adapter for static2000
+//pug adapter for static2000
 'use strict';
 
-var jade = require('jade');
+var pug = require('pug');
 
 module.exports = {
-    templateExtension: '.jade',
-    templateGlob: '*.jade',
-    globalsInclude: 'include ./includes/globals.jade\n',
+    templateExtension: '.pug',
+    templateGlob: '*.pug',
+    globalsInclude: 'include ./includes/globals.pug\n',
     compile: function(source, options) {
-        var jadeOptions = {
+        var pugOptions = {
             filename: options.filename,
             pretty: true
         };
-        return jade.compile(source, jadeOptions);
+        return pug.compile(source, pugOptions);
     },
     render: function(source, options) {
-        return jade.render(source, options);
+        return pug.render(source, options);
     }
 };
