@@ -56,4 +56,27 @@ block body
     var rendered = compiled({});
     rendered.trim().should.equal('<p>Test mixin</p>');
   });
+
+  it('should use mixins and a template', function() {
+    var compiled = pugAdapter.compile(pugAdapter.globalsInclude + `extends ./layouts/default.pug
+block title
+  | Test title
+
+block body
+  +test-mixin`, {
+      filename: 'test/templates/use-layout.pug'
+    });
+    var rendered = compiled({});
+    rendered.trim().should.equal(`<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Test title
+    </title>
+  </head>
+  <body>
+    <p>Test mixin</p>
+  </body>
+</html>`);
+  });
 });
