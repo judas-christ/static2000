@@ -1,6 +1,9 @@
 {
   "name": "static2000",
   "version": "0.5.0",
+  "engines": {
+    "node": ">=4"
+  },
   "description": "The simple static site generator",
   "homepage": "https://github.com/judas-christ/static2000",
   "main": "index.js",
