@@ -1,8 +1,7 @@
 const pugAdapter = require('../index');
-var should = require('should');
+const should = require('should');
 
 describe('pug adapter', function() {
-
   it('should render simple template', function() {
     var rendered = pugAdapter.render('p Test string', {});
     rendered.should.equal('<p>Test string</p>');
@@ -27,14 +26,17 @@ describe('pug adapter', function() {
   });
 
   it('should extend a layout', function() {
-    var compiled = pugAdapter.compile(`extends ./layouts/default.pug
+    var compiled = pugAdapter.compile(
+      `extends ./layouts/default.pug
 block title
   | Test title
 
 block body
-  | Test body`, {
-      filename: 'test/templates/use-layout.pug'
-    });
+  | Test body`,
+      {
+        filename: 'test/templates/use-layout.pug'
+      }
+    );
     var rendered = compiled({});
     rendered.trim().should.equal(`<!DOCTYPE html>
 <html>
@@ -58,14 +60,18 @@ block body
   });
 
   it('should use mixins and a template', function() {
-    var compiled = pugAdapter.compile(pugAdapter.globalsInclude + `extends ./layouts/default.pug
+    var compiled = pugAdapter.compile(
+      pugAdapter.globalsInclude +
+        `extends ./layouts/default.pug
 block title
   | Test title
 
 block body
-  +test-mixin`, {
-      filename: 'test/templates/use-layout.pug'
-    });
+  +test-mixin`,
+      {
+        filename: 'test/templates/use-layout.pug'
+      }
+    );
     var rendered = compiled({});
     rendered.trim().should.equal(`<!DOCTYPE html>
 <html>
