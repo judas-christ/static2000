@@ -1,0 +1,15 @@
+---
+title: Sub page
+template: home
+---
+
+p This is a sub page
+
+p These are my child pages:
+
+ul
+    each child in model.children()
+        li
+            a(href=child.relativePath())= child.title
+
++example-mixin

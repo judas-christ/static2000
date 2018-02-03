@@ -1,6 +1,6 @@
 {
   "name": "static2000",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "The simple static site generator",
   "homepage": "https://github.com/judas-christ/static2000",
   "main": "index.js",
@@ -21,19 +21,21 @@
     "lodash": "^2.4.2",
     "minimatch": "^2.0.8",
     "minimist": "^1.1.1",
-    "vinyl": "^0.4.6",
-    "vinyl-fs": "^1.0.0"
+    "vinyl": "^2.1.0",
+    "vinyl-fs": "^3.0.2"
   },
   "devDependencies": {
     "chai": "^2.3.0",
     "jshint": "^2.8.0",
     "mocha": "^2.2.5",
+    "prettier": "^1.10.2",
     "rimraf": "^2.3.4"
   },
   "scripts": {
     "test": "mocha",
-    "pretest": "jshint \"lib\" index.js",
-    "clean": "rimraf \"www\""
+    "pretest": "npm run prettify && jshint \"lib\" index.js",
+    "clean": "rimraf \"www\"",
+    "prettify": "prettier --write \"{lib/*.js,index.js,bin/static2000}\""
   },
   "repository": {
     "type": "git",

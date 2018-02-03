@@ -1,4 +1,4 @@
-'use strict';
+
 
 var stateFactory = require('../lib/state');
 var expect = require('chai').expect;

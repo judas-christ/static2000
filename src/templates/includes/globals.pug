@@ -1,0 +1,7 @@
+//- Put your global mixins here; globals.pug is imported automatically and available in all templates.
+mixin menu(root)
+  each page in root.children()
+    a(href=page.relativePath())= page.title
+
+mixin example-mixin
+  small This is a mixin available in all templates and pages

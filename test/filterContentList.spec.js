@@ -1,4 +1,4 @@
-'use strict';
+
 
 var filterContentList = require('../lib/filterContentList');
 var expect = require('chai').expect;
