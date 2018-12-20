@@ -26,18 +26,20 @@
   },
   "homepage": "https://github.com/judas-christ/static2000-pug",
   "dependencies": {
-    "pug": "^2.0.0-rc.4"
+    "pug": "^2.0.3"
   },
   "devDependencies": {
-    "mocha": "^5.0.0",
+    "mocha": "^5.2.0",
     "pre-commit": "^1.2.2",
-    "prettier": "^1.10.2",
-    "should": "^13.2.1"
+    "prettier": "^1.15.3",
+    "should": "^13.2.3"
   },
   "scripts": {
     "test": "mocha",
     "prettify": "prettier --write index.js test/*.js",
     "pretest": "npm run prettify"
   },
-  "pre-commit": ["test"]
+  "pre-commit": [
+    "test"
+  ]
 }
