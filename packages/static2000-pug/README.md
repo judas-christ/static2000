@@ -1,4 +1,4 @@
-static2000-pug
+static2000-pug [![Build Status](https://travis-ci.com/judas-christ/static2000-pug.svg?branch=master)](https://travis-ci.com/judas-christ/static2000-pug)
 ===============
 
 [Pug](https://github.com/pugjs/pug) adapter for [Static2000](https://github.com/judas-christ/static2000).
