@@ -1,6 +1,6 @@
 {
   "name": "static2000",
-  "version": "0.5.1",
+  "version": "0.5.3",
   "engines": {
     "node": ">=7"
   },
