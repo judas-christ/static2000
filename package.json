@@ -17,22 +17,22 @@
     "LICENSE"
   ],
   "dependencies": {
-    "colors": "^1.1.0",
-    "event-stream": "^3.3.4",
+    "colors": "^1.3.3",
+    "event-stream": "3.3.4",
     "findup-sync": "^2.0.0",
     "front-matter": "^2.3.0",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.11",
     "minimatch": "^3.0.4",
-    "minimist": "^1.1.1",
-    "vinyl": "^2.1.0",
-    "vinyl-fs": "^3.0.2"
+    "minimist": "^1.2.0",
+    "vinyl": "^2.2.0",
+    "vinyl-fs": "^3.0.3"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
-    "jshint": "^2.9.5",
-    "mocha": "^5.0.0",
+    "chai": "^4.2.0",
+    "jshint": "^2.9.7",
+    "mocha": "^5.2.0",
     "pre-commit": "^1.2.2",
-    "prettier": "^1.10.2",
+    "prettier": "^1.15.3",
     "rimraf": "^2.6.2"
   },
   "scripts": {
@@ -55,5 +55,7 @@
   "bugs": {
     "url": "https://github.com/judas-christ/static2000/issues"
   },
-  "pre-commit": ["test"]
+  "pre-commit": [
+    "test"
+  ]
 }
