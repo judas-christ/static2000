@@ -1,6 +1,6 @@
 {
   "name": "static2000-pug",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Pug adapter for Static2000",
   "main": "index.js",
   "files": [
