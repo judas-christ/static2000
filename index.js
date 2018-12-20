@@ -48,19 +48,17 @@ var buildSite = function(options, onSuccess, onError) {
   var pagesStream = opts.dest ? fs.dest(opts.dest) : es.through();
   var sitemapStream = opts.dest ? fs.dest(opts.dest) : es.through();
 
-  es
-    .merge(
-      buildTemplates(opts, onErrorHandler),
-      buildContentList(opts, onErrorHandler)
-    )
-    .on('end', function() {
-      buildSitemap(opts, onErrorHandler).pipe(sitemapStream);
-      buildContentTree(opts, onErrorHandler).on('end', function() {
-        compileContentBodies(opts, onErrorHandler).on('end', function() {
-          buildPages(opts, onErrorHandler).pipe(pagesStream);
-        });
+  es.merge(
+    buildTemplates(opts, onErrorHandler),
+    buildContentList(opts, onErrorHandler)
+  ).on('end', function() {
+    buildSitemap(opts, onErrorHandler).pipe(sitemapStream);
+    buildContentTree(opts, onErrorHandler).on('end', function() {
+      compileContentBodies(opts, onErrorHandler).on('end', function() {
+        buildPages(opts, onErrorHandler).pipe(pagesStream);
       });
     });
+  });
   return es.merge(pagesStream, sitemapStream).on('end', onSuccessHandler);
 };
 
