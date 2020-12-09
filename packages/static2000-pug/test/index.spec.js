@@ -1,5 +1,5 @@
 const pugAdapter = require('../index');
-const should = require('should');
+require('chai').should();
 
 describe('pug adapter', function() {
   it('should render simple template', function() {

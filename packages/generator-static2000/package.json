@@ -40,6 +40,7 @@
     "@types/yeoman-assert": "^3.1.1",
     "@types/yeoman-generator": "^4.11.3",
     "@types/yeoman-test": "^2.0.5",
+    "chai": "^4.2.0",
     "mocha": "^8.2.1",
     "yeoman-assert": "^3.1.1",
     "yeoman-test": "^3.0.0"

@@ -1,10 +1,12 @@
 {
   "name": "static2000",
-  "version": "1.0.0",
+  "version": "0.5.3",
   "description": "",
+  "private": true,
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "lerna bootstrap --hoist",
+    "test": "lerna run test"
   },
   "repository": {
     "type": "git",
