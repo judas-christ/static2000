@@ -1,0 +1,61 @@
+{
+  "name": "static2000",
+  "version": "0.5.3",
+  "engines": {
+    "node": ">=7"
+  },
+  "description": "The simple static site generator",
+  "homepage": "https://github.com/judas-christ/static2000",
+  "main": "index.js",
+  "bin": {
+    "static2000": "./bin/static2000"
+  },
+  "files": [
+    "index.js",
+    "lib",
+    "bin",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "colors": "^1.3.3",
+    "event-stream": "3.3.4",
+    "findup-sync": "^2.0.0",
+    "front-matter": "^2.3.0",
+    "lodash": "^4.17.11",
+    "minimatch": "^3.0.4",
+    "minimist": "^1.2.0",
+    "vinyl": "^2.2.0",
+    "vinyl-fs": "^3.0.3"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "jshint": "^2.9.7",
+    "mocha": "^5.2.0",
+    "pre-commit": "^1.2.2",
+    "prettier": "^1.15.3",
+    "rimraf": "^2.6.2"
+  },
+  "scripts": {
+    "test": "mocha",
+    "pretest": "npm run prettify && jshint \"lib\" index.js",
+    "clean": "rimraf \"www\"",
+    "prettify": "prettier --write \"{lib/*.js,index.js,bin/static2000}\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/judas-christ/static2000.git"
+  },
+  "keywords": [
+    "static",
+    "site",
+    "generator"
+  ],
+  "author": "Daniel Hägglund",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/judas-christ/static2000/issues"
+  },
+  "pre-commit": [
+    "test"
+  ]
+}

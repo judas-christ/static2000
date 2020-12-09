@@ -28,4 +28,5 @@ node_modules
 .lock-wscript
 
 www
-/.vscode
+.vscode
+.DS_Store
