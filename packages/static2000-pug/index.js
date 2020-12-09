@@ -1,5 +1,5 @@
 //pug adapter for static2000
-var pug = require('pug');
+const pug = require('pug');
 
 function renamePlugins(source, options) {
   options.plugins2000 = options.plugins;
@@ -18,7 +18,7 @@ module.exports = {
       `$1${this.globalsInclude}`
     );
     source = renamePlugins(source, options);
-    var pugOptions = {
+    const pugOptions = {
       filename: options.filename,
       pretty: true
     };
