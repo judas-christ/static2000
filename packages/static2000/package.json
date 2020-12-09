@@ -2,7 +2,7 @@
   "name": "static2000",
   "version": "0.5.3",
   "engines": {
-    "node": ">=7"
+    "node": ">=12"
   },
   "description": "The simple static site generator",
   "homepage": "https://github.com/judas-christ/static2000",
@@ -30,7 +30,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "jshint": "^2.9.7",
-    "mocha": "^5.2.0",
+    "mocha": "^8.2.1",
     "pre-commit": "^1.2.2",
     "prettier": "^1.15.3",
     "rimraf": "^2.6.2"

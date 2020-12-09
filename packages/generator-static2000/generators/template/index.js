@@ -1,23 +1,33 @@
 'use strict';
-var yeoman = require('yeoman-generator');
+const Generator = require('yeoman-generator');
 
-var templateEngines = require('../../lib/templateAdapters');
+const templateEngines = require('../../lib/templateAdapters');
 
-module.exports = yeoman.generators.NamedBase.extend({
-  initializing: function () {
-    this.log('Generating template: ' + this.name);
-  },
+module.exports = class TemplateGenerator extends Generator {
+  constructor(args, opts) {
+    super(args, opts);
 
-  configuring: function() {
+    this.argument('name', { type: String, required: true });
+  }
+
+  initializing() {
+    this.log('Generating template: ' + this.options.name);
+  }
+
+  configuring() {
     this.baseUrl = this.config.get('baseUrl');
     this.templateEngine = templateEngines[this.config.get('templateEngine')];
-  },
+  }
 
-  writing: function () {
+  writing() {
     this.fs.copyTpl(
-      this.templatePath(this.templateEngine.name + '/_template.' + this.templateEngine.ext),
-      this.destinationPath('src/templates/' + this.name + '.' + this.templateEngine.ext),
-      this
+      this.templatePath(
+        this.templateEngine.name + '/_template.' + this.templateEngine.ext
+      ),
+      this.destinationPath(
+        'src/templates/' + this.options.name + '.' + this.templateEngine.ext
+      ),
+      this.options
     );
   }
-});
+};

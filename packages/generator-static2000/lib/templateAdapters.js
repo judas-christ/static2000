@@ -1,12 +1,12 @@
 'use strict';
 
 module.exports = {
-  jade: {
-    name: 'jade',
-    display: 'Jade',
-    adapter: 'static2000-jade',
-    glob: 'jade',
-    ext: 'jade',
+  pug: {
+    name: 'pug',
+    display: 'Pug',
+    adapter: 'static2000-pug',
+    glob: 'pug',
+    ext: 'pug',
     comment: '//- <%= comment %>\n'
   },
   nunjucks: {
@@ -16,7 +16,7 @@ module.exports = {
     glob: 'html',
     ext: 'html',
     comment: '{# <%= comment %> #}\n'
-  },
+  }
   // swig: {
   //   name: 'swig',
   //   display: 'Swig',

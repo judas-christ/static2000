@@ -1,6 +1,9 @@
 {
   "name": "static2000-nunjucks",
   "version": "0.1.2",
+  "engines": {
+    "node": ">=12"
+  },
   "description": "Nunjucks adapter for Static2000",
   "main": "index.js",
   "scripts": {
@@ -30,6 +33,6 @@
     "nunjucks": "^1.3.4"
   },
   "devDependencies": {
-    "mocha": "^2.1.0"
+    "mocha": "^8.2.1"
   }
 }
