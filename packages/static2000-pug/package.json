@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^8.2.1",
+    "mocha": "^10.1.0",
     "pre-commit": "^1.2.2",
     "prettier": "^1.15.3"
   },
